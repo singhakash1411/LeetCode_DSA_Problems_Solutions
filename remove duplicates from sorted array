@@ -1,0 +1,11 @@
+if(nums.size()<1) return 0;
+     int j=0;
+     for(int i=1;i<nums.size();i++){
+        if(nums[j] !=nums[i])
+            {
+                j++;
+                nums[j]=nums[i];
+            }
+     }
+     return j+1;
+    }
