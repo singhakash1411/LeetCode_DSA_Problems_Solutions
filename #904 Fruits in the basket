@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int totalFruit(vector<int>& fruits) {
+        map<int,int>fruitCount;
+        int left=0, right=0,maxFruits=0;
+        while (right < fruits.size()) {
+            fruitCount[fruits[right]]++;
+
+            while (fruitCount.size() > 2) {
+                fruitCount[fruits[left]]--;
+                if (fruitCount[fruits[left]] == 0) {
+                    fruitCount.erase(fruits[left]);
+                }
+                left++;
+            }
+
+            maxFruits = max(maxFruits, right - left + 1);
+            right++;
+        }
+        return maxFruits;
+        
+         
+    }
+};
+
+          
