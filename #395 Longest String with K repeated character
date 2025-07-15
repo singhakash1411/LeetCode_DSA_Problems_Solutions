@@ -1,0 +1,46 @@
+class Solution {
+public:
+    int longestSubstring(string s, int k) {
+        int maxlen = 0;
+        int n = s.size();
+
+        for (int start = 0; start < n; ++start) {
+            map<char, int> freq;
+            int uniqueChars = 0;
+            int charsAtLeastK = 0;
+
+            for (int end = start; end < n; ++end) {
+                freq[s[end]]++;
+                if (freq[s[end]] == 1) uniqueChars++;
+                if (freq[s[end]] == k) charsAtLeastK++;
+
+                if (uniqueChars == charsAtLeastK) {
+                    maxlen = max(maxlen, end - start + 1);
+                }
+            }
+        }
+
+        return maxlen;
+    }
+};
+
+// // map<char,int>mpp;
+//         int cnt=0;
+//         int start=0, maxlen=INT_MIN;
+//         for(int end=0; end < s.length();end++){
+//             mpp[s[end]]++;
+//             cnt =mpp[s[end]];
+//             while(cnt >= k){
+//                 int len = end- start;
+//                 maxlen= max(len, maxlen);
+//                 mpp[s[start]]--;
+                
+//             }
+//         }
+//         if(maxlen == INT_MIN){
+//             return 0;
+//         }
+//         else{
+//             return maxlen;
+//         }
+       
