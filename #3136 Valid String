@@ -1,0 +1,25 @@
+class Solution {
+public:
+
+    bool isValid(string word) {
+        if (word.length() < 3) return false;
+
+        string vowels = "aeiouAEIOU";
+        bool hasVowel = false;
+        bool hasConsonant = false;
+
+        for (char c : word) {
+            if (!isdigit(c) && !isalpha(c)) {
+                
+                return false;
+            }
+            if (vowels.find(c) != string::npos) {
+                hasVowel = true;
+            } else if (isalpha(c)) {
+                hasConsonant = true;
+            }
+        }
+
+        return hasVowel && hasConsonant;
+    }
+};
