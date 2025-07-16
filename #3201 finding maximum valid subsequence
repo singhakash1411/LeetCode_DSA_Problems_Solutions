@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int maximumLength(vector<int>& nums) {
+        int maxLen = 0;
+        for (int evenParity = 0; evenParity <= 1; ++evenParity) {
+            for (int oddParity = 0; oddParity <= 1; ++oddParity) {
+                int length = 0;
+                for (int num : nums) {
+                    if (length % 2 == 0) {
+                        if (num % 2 == evenParity) length++;
+                    } else {
+                        if (num % 2 == oddParity) length++;
+                    }
+                }
+                maxLen = max(maxLen, length);
+            }
+        }
+        return maxLen;
+    }
+};
