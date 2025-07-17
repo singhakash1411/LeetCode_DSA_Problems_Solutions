@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int maximumLength(vector<int>& nums, int k) {
+    
+    int max_len = 0;
+
+    for (int val = 0; val < k; ++val) {
+        vector<int> dp(k, 0);  
+
+        for (int num : nums) {
+            int y_mod = num % k;
+            int x_mod = (k + val - y_mod) % k;
+            dp[y_mod] = max(dp[y_mod], dp[x_mod] + 1);
+        }
+
+        max_len = max(max_len, *max_element(dp.begin(), dp.end()));
+    }
+
+    return max_len;
+
+    }
+};
