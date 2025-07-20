@@ -1,0 +1,68 @@
+class Solution {
+    struct TrieNode {
+        unordered_map<string, TrieNode*> children;
+        string name;
+        bool marked = false;
+    };
+
+    TrieNode* root = new TrieNode();
+    unordered_map<string, vector<TrieNode*>> dupMap;
+
+    string dfsSerialize(TrieNode* node) {
+        if (node->children.empty()) return "";
+
+        vector<pair<string, string>> childSerials;
+        for (auto& [name, child] : node->children) {
+            childSerials.push_back({name, dfsSerialize(child)});
+        }
+
+        sort(childSerials.begin(), childSerials.end());
+        string serial;
+        for (auto& [name, ser] : childSerials) {
+            serial += "(" + name + ser + ")";
+        }
+
+        dupMap[serial].push_back(node);
+        return serial;
+    }
+
+    void dfsCollect(TrieNode* node, vector<string>& path, vector<vector<string>>& res) {
+        for (auto& [name, child] : node->children) {
+            if (!child->marked) {
+                path.push_back(name);
+                res.push_back(path);
+                dfsCollect(child, path, res);
+                path.pop_back();
+            }
+        }
+    }
+
+public:
+    vector<vector<string>> deleteDuplicateFolder(vector<vector<string>>& paths) {
+        for (auto& path : paths) {
+            TrieNode* node = root;
+            for (auto& name : path) {
+                if (!node->children.count(name)) {
+                    node->children[name] = new TrieNode();
+                    node->children[name]->name = name;
+                }
+                node = node->children[name];
+            }
+        }
+
+        dfsSerialize(root);
+
+        for (auto& [_, nodes] : dupMap) {
+            if (nodes.size() > 1) {
+                for (TrieNode* node : nodes) {
+                    node->marked = true;
+                }
+            }
+        }
+
+        vector<vector<string>> res;
+        vector<string> path;
+        dfsCollect(root, path, res);
+        return res;
+    }
+};
