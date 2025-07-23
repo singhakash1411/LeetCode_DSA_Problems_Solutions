@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int mySqrt(int x) {
+        int left = 0, right = x, sum = 0;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if ((long long)mid * mid == x) return mid;
+            else if ((long long)mid * mid < x) {
+                sum = mid;
+                left = mid + 1;
+            } else {
+                right = mid - 1;  
+            }
+        }
+        return sum;
+    }
+};
