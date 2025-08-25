@@ -1,0 +1,36 @@
+class Solution {
+public:
+    vector<int> findDiagonalOrder(vector<vector<int>>& matrix) {
+        if (matrix.empty()) return {};
+
+        int rows = matrix.size();
+        int cols = matrix[0].size();
+        vector<int> result;
+        result.reserve(rows * cols);
+
+        for (int d = 0; d < rows + cols - 1; d++) {
+            vector<int> temp;
+
+            // Find starting row index
+            int r = (d < cols) ? 0 : d - cols + 1;
+            int c = (d < cols) ? d : cols - 1;
+
+            // Collect all elements in this diagonal
+            while (r < rows && c >= 0) {
+                temp.push_back(matrix[r][c]);
+                r++;
+                c--;
+            }
+
+            // Reverse every alternate diagonal
+            if (d % 2 == 0) {
+                reverse(temp.begin(), temp.end());
+            }
+
+            // Append to result
+            result.insert(result.end(), temp.begin(), temp.end());
+        }
+
+        return result;
+    }
+};
