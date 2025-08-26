@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int areaOfMaxDiagonal(vector<vector<int>>& dimensions) {
+        int maxArea = 0;
+        long long maxDia = -1;  
+
+        for (int i = 0; i < dimensions.size(); i++) {
+            int w = dimensions[i][0];
+            int h = dimensions[i][1];
+            long long diagonalSqr = 1LL * w * w + 1LL * h * h;
+            int area = w * h;
+
+            if (diagonalSqr > maxDia) {
+                maxDia = diagonalSqr;
+                maxArea = area;
+            } 
+            else if (diagonalSqr == maxDia) {
+                maxArea = max(maxArea, area);
+            }
+        }
+
+        return maxArea;
+    }
+};
