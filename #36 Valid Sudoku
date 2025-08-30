@@ -1,0 +1,29 @@
+class Solution {
+public:
+    bool isValidSudoku(vector<vector<char>>& board) {
+        array<unordered_set<char>,9>row;
+        array<unordered_set<char>,9>col;
+        array<unordered_set<char>,9>box;
+
+        for(int i = 0 ; i <9; i++){
+            for(int j =0; j < 9 ; j++){
+                char val = board[i][j];
+
+                if(val == '.')continue; // skip karna h agar khali hai to
+
+                if(row[i].count(val)) return false;
+                row[i].insert(val);
+
+                if(col[j].count(val))return false;
+                col[j].insert(val);
+
+                //Ab chhotu box ke lia check karenge if duplicates are there or not jiske lia index define karenge first
+                int boxIndex = (i / 3)* 3 + (j / 3);
+                if(box[boxIndex].count(val))return false;
+                box[boxIndex].insert(val);
+            }
+        }
+        return true;
+       
+    }
+};
